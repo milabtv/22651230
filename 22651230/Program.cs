@@ -16,7 +16,7 @@ namespace _22651230
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Workers());
+            Application.Run(new Menu());
         }
     }
 }
