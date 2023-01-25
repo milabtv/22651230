@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassModel\Client.cs" />
+    <Compile Include="ClassModel\Couriers.cs" />
+    <Compile Include="ClassModel\Products.cs" />
+    <Compile Include="ClassModel\ProductType.cs" />
+    <Compile Include="ClassModel\Shipment.cs" />
+    <Compile Include="ClassModel\Workers.cs" />
     <Compile Include="Clients.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,6 +64,7 @@
     <Compile Include="Couriers.Designer.cs">
       <DependentUpon>Couriers.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataManager.cs" />
     <Compile Include="ProductType.cs">
       <SubType>Form</SubType>
     </Compile>
