@@ -28,6 +28,23 @@ namespace _22651230.ClassModel
             this.phone = phone;
             this.id = id;
         }
+        public Client(string firstName, string lastName, int id)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.id = id;
+        }
+        public Client(int id)
+        { 
+            this.id = id;
+        }
+        public Client(string firstName, string lastName, string adres, string phone)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.adres = adres;
+            this.phone = phone;
+        }
         public Client()
         {
             this.firstName = "";

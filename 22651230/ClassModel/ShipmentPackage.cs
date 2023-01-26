@@ -19,11 +19,15 @@ namespace _22651230.ClassModel
             this.product = product;
             this.quantity = quantity;
         }
+        public ShipmentPackage(int id, int quantity)
+        {
+            this.product.Id = id;
+            this.quantity = quantity;
+        }
         public ShipmentPackage()
         {
             
         }
 
     }
-}
 }

@@ -33,7 +33,7 @@ namespace _22651230
         {
             try
             {
-                connectionString = "Data Source=DESKTOP-9BQCEMD\\MILAVB;Initial Catalog=SHOP;Integrated Security=True";
+                connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"" + Path.GetFullPath(Directory.GetCurrentDirectory() + "\\..\\..\\shop.mdf") + "\";Integrated Security=True";
                 connection = new SqlConnection(connectionString);
                 connection.Open();
             }
@@ -80,7 +80,7 @@ namespace _22651230
 
             try
             {
-                SqlCommand cmd = new SqlCommand("UPDATE Clients SET FirstName = @f,LastName = @l,PhoneNum = @p,Adres = @a WHERE ID =  @id", connection);
+                SqlCommand cmd = new SqlCommand("UPDATE Clients SET FirstName = @fn,LastName = @ln,PhoneNum = @p,Adres = @a WHERE ID =  @id", connection);
 
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@fn", client.FirstName);
@@ -120,6 +120,33 @@ namespace _22651230
 
             return successful;
         }
+        public List<Client> SelectClients()
+        {
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SELECT FirstName,LastName,ID FROM CLIENTS" , connection);
+
+
+                List<Client> positions = new List<Client>();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        positions.Add(new Client((string)reader["FirstName"], (string)reader["LastName"],(int)reader["ID"]));
+                    }
+                }
+
+                return positions;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+           
+        }
         #endregion
 
         #region Workers
@@ -151,7 +178,7 @@ namespace _22651230
 
             try
             {
-                SqlCommand cmd = new SqlCommand("UPDATE Workers SET FirstName = @f,LastName = @l,Phonenum = @p WHERE  ID = @id", connection);
+                SqlCommand cmd = new SqlCommand("UPDATE Workers SET FirstName = @fname,LastName = @lname,Phonenum = @ph WHERE  ID = @id", connection);
 
                 cmd.CommandType = CommandType.Text;               
 
@@ -191,10 +218,37 @@ namespace _22651230
 
             return successful;
         }
+        public List<Worker> SelectWorkers()
+        {
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SELECT FirstName,LastName,ID FROM Workers", connection);
+
+
+                List<Worker> positions = new List<Worker>();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        positions.Add(new Worker((string)reader["FirstName"], (string)reader["LastName"], (int)reader["ID"]));
+                    }
+                }
+
+                return positions;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+
+        }
         #endregion
 
         #region Couriers
-        public bool InsertCourier(Courier courier)
+        public bool InsertCouriers(Courier courier)
         {
             bool successful = true;
 
@@ -215,13 +269,13 @@ namespace _22651230
 
             return successful;
         }
-        public bool UpdateCouriers(Courier courier, Courier c)
+        public bool UpdateCouriers(Courier courier)
         {
             bool successful = true;
 
             try
             {
-                SqlCommand cmd = new SqlCommand("UPDATE Couriers SET Name_ = @n,Price = @p WHERE Name_ = @name,Price = @price WHERE ID = @id ", connection);
+                SqlCommand cmd = new SqlCommand("UPDATE Couriers SET Name_ = @name,Price = @price WHERE ID = @id ", connection);
 
                 cmd.CommandType = CommandType.Text;;
 
@@ -258,6 +312,31 @@ namespace _22651230
             }
 
             return successful;
+        }
+        public List<Courier> SelectCouriers()
+        {
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SELECT FirstName,ID FROM Workers", connection);
+
+
+                List<Courier> positions = new List<Courier>();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        positions.Add(new Courier((string)reader["FirstName"], (int)reader["ID"]));
+                    }
+                }
+
+                return positions;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         #endregion
 
@@ -298,7 +377,7 @@ namespace _22651230
                 cmd.Parameters.AddWithValue("@quant", product.Quantity);                
                 cmd.Parameters.AddWithValue("@typeId", product.ProductType.Id);
                 cmd.Parameters.AddWithValue("@pr", product.Price);
-                cmd.Parameters.AddWithValue("@name", product.Id);
+                cmd.Parameters.AddWithValue("@id", product.Id);
 
                 cmd.ExecuteNonQuery();
             }
@@ -315,10 +394,10 @@ namespace _22651230
 
             try
             {
-                SqlCommand cmd = new SqlCommand("DELETE FROM Couriers WHERE WHERE ID = @id", connection);
+                SqlCommand cmd = new SqlCommand("DELETE FROM Products WHERE ID = @id", connection);
 
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@name", product.Id);
+                cmd.Parameters.AddWithValue("@id", product.Id);
 
                 cmd.ExecuteNonQuery();
             }
@@ -328,6 +407,120 @@ namespace _22651230
             }
 
             return successful;
+        }
+        public List<Product> SelectProducts()
+        {
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SELECT Name_,ID FROM Products", connection);
+
+
+                List<Product> positions = new List<Product>();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        positions.Add(new Product((string)reader["Name_"], (int)reader["ID"]));
+                    }
+                }
+
+                return positions;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        #endregion
+
+        #region ProductsType
+        public bool InsertProdType(ProductType prodType)
+        {
+            bool successful = true;
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO ProductType(Name_)VALUES(@name)", connection);
+
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@name", prodType.Name);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                successful = false;
+            }
+
+            return successful;
+        }
+        public bool UpdateProdType(ProductType prodType)
+        {
+            bool successful = true;
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("UPDATE ProductType SET Name_ = @name WHERE ID = @id", connection);
+
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@name", prodType.Name);
+                cmd.Parameters.AddWithValue("@id", prodType.Id);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                successful = false;
+            }
+
+            return successful;
+        }
+        public bool DeleteProdType(ProductType prodType)
+        {
+            bool successful = true;
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM ProductType WHERE WHERE ID = @id", connection);
+
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@name", prodType.Id);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                successful = false;
+            }
+
+            return successful;
+        }
+        public List<ProductType> SelectProdTypes()
+        {
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SELECT Name_,ID FROM ProductType", connection);
+
+
+                List<ProductType> positions = new List<ProductType>();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        positions.Add(new ProductType((string)reader["Name_"], (int)reader["ID"]));
+                    }
+                }
+
+                return positions;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         #endregion
 
@@ -348,14 +541,14 @@ namespace _22651230
                 cmd.Parameters.AddWithValue("@date", shipment.Dateship);
                 cmd.ExecuteNonQuery();
 
-                cmd = new SqlCommand("INSERT INTO Shipments (Worker,Client,Courier,DateShipment)VALUES(@name, @quant, @typeID, @price)", connection);
+                cmd = new SqlCommand("INSERT INTO ShipmentPackage (Shipment,Pruduct,Quantity)VALUES(@id, @prid, @quant)", connection);
                 for (int i = 0; i < shipment.package.Count; i++)
                 {
                    
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue("@name", shipment.Id);
-                    cmd.Parameters.AddWithValue("@name", shipment.package[i].Product.Id);
-                    cmd.Parameters.AddWithValue("@name", shipment.package[i].Quantity);
+                    cmd.Parameters.AddWithValue("@id", shipment.Id);
+                    cmd.Parameters.AddWithValue("@prid", shipment.package[i].Product.Id);
+                    cmd.Parameters.AddWithValue("@quant", shipment.package[i].Quantity);
                     cmd.ExecuteNonQuery();
 
                 }
@@ -399,27 +592,18 @@ namespace _22651230
 
             try
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO Shipments (ID,Worker,Client,Courier,DateShipment)VALUES(@id, @worker, @client, @courier, @date)", connection);
+                SqlCommand cmd = new SqlCommand("DELETE FROM Shipments WHERE ID = @id", connection);
 
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@id", shipment.Id);
-                cmd.Parameters.AddWithValue("@worker", shipment.Worker.ID);
-                cmd.Parameters.AddWithValue("@client", shipment.Client.Id);
-                cmd.Parameters.AddWithValue("@courier", shipment.Courier.Id);
-                cmd.Parameters.AddWithValue("@date", shipment.Dateship);
                 cmd.ExecuteNonQuery();
 
-                cmd = new SqlCommand("INSERT INTO Shipments (Worker,Client,Courier,DateShipment)VALUES(@name, @quant, @typeID, @price)", connection);
-                for (int i = 0; i < shipment.package.Count; i++)
-                {
+                cmd = new SqlCommand("DELETE FROM ShipmentPackage WHERE ID = @id)", connection);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@id", shipment.Id);
+                cmd.ExecuteNonQuery();
 
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue("@name", shipment.Id);
-                    cmd.Parameters.AddWithValue("@name", shipment.package[i].Product.Id);
-                    cmd.Parameters.AddWithValue("@name", shipment.package[i].Quantity);
-                    cmd.ExecuteNonQuery();
-
-                }
+                
 
 
             }
@@ -429,6 +613,31 @@ namespace _22651230
             }
 
             return successful;
+        }
+        public List<Shipment> SelectShipment()
+        {
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SELECT Name_,ID FROM Products", connection);
+                
+
+                List<Shipment> positions = new List<Shipment>();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        positions.Add(new Shipment((int)reader["ID"]));
+                    }
+                }
+
+                return positions;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         #endregion
     }

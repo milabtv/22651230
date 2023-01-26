@@ -54,7 +54,7 @@ namespace _22651230
 
         private void button4_Click(object sender, EventArgs e)
         {
-            ProductType frm = new ProductType();
+            ProductTypes frm = new ProductTypes();
             frm.Show();
             this.Hide();
 
@@ -63,10 +63,10 @@ namespace _22651230
         private void button7_Click(object sender, EventArgs e)
         {
 
-            Workbook book = new Workbook();
-            Worksheet sheet = book.Worksheets[0];
-            sheet.InsertDataTable(t, true, 1, 1);
-            book.SaveToFile("ToExcel.xls");
+            //Workbook book = new Workbook();
+            //Worksheet sheet = book.Worksheets[0];
+            //sheet.InsertDataTable(t, true, 1, 1);
+            //book.SaveToFile("ToExcel.xls");
         }
 
         private void button8_Click(object sender, EventArgs e)

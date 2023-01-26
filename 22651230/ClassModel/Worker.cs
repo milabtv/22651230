@@ -16,13 +16,29 @@ namespace _22651230.ClassModel
         public string FirstName { get => firstName; set => firstName = value; }
         public string LastName { get => lastName; set => lastName = value; }
         public string Phone { get => phone; set => phone = value; }
-        public int ID { get => ID; set => ID = value; }
+        public int ID { get => id; set => id = value; }
 
         public Worker(string firstName, string lastName, string phone,int id)
         {
             this.firstName = firstName;
             this.lastName = lastName;
             this.phone = phone;
+            this.id = id;
+        }
+        public Worker(string firstName, string lastName, int id)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;;
+            this.id = id;
+        }
+        public Worker(string firstName, string lastName, string phone)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.phone = phone;
+        }
+        public Worker( int id)
+        {
             this.id = id;
         }
         public Worker()

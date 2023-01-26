@@ -27,7 +27,20 @@ namespace _22651230.ClassModel
             this.courier = courier;
             this.dateship = dateship;
         }
+        public Shipment(Worker worker, Client client, Courier courier, DateTime dateship)
+        {
+            ;
+            this.worker = worker;
+            this.client = client;
+            this.courier = courier;
+            this.dateship = dateship;
+        }
+        public Shipment(int id)
+        {
+            this.id = id;
+        }
 
+        
         public int Id { get => id; set => id = value; }
         public Worker Worker { get => worker; set => worker = value; }
         public Client Client { get => client; set => client = value; }

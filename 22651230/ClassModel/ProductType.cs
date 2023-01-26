@@ -16,6 +16,14 @@ namespace _22651230.ClassModel
             this.name = name;
             this.id = id;
         }
+        public ProductType(string name)
+        {
+            this.name = name;
+        }
+        public ProductType(int id)
+        {
+            this.id = id;
+        }
         public ProductType()
         {
             this.name = "";

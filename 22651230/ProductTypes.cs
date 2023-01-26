@@ -11,57 +11,57 @@ using System.Windows.Forms;
 
 namespace _22651230
 {
-    public partial class Clients : Form
+    public partial class ProductTypes : Form
     {
-        public void LoadClients()
-        {
-            DataManager dataManager = new DataManager();
-            var bindingSource1 = new BindingSource();
-            bindingSource1.DataSource = dataManager.SelectClients();
-            comboBox1.DataSource = bindingSource1.DataSource;
-            comboBox1.DisplayMember = "FirstName";
-            comboBox1.ValueMember = "ID";
-            dataManager.Dispose();
-        }
-        public Clients()
+        public ProductTypes()
         {
             InitializeComponent();
         }
-
-        
-        private void Clients_Load(object sender, EventArgs e)
+        public void LoadProdType()
         {
-            LoadClients();
+            DataManager dataManager = new DataManager();
+            var bindingSource1 = new BindingSource();
+            bindingSource1.DataSource = dataManager.SelectProdTypes();
+            comboBox1.DataSource = bindingSource1.DataSource;
+            comboBox1.DisplayMember = "Name_";
+            comboBox1.ValueMember = "ID";
+            dataManager.Dispose();
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            Client client = new Client(textBox1.Text, textBox3.Text, textBox2.Text, textBox4.Text);
+            ProductType prodType = new ProductType(textBox1.Text);
             DataManager dataManager = new DataManager();
-            if (dataManager.InsertClients(client))
+            if (dataManager.InsertProdType(prodType))
                 MessageBox.Show("Inserted");
             else MessageBox.Show("NOT Inserted");
             dataManager.Dispose();
-            LoadClients();
+            LoadProdType();
         }
-        
+
         private void button2_Click(object sender, EventArgs e)
         {
-            Client client = new Client(textBox1.Text, textBox3.Text, textBox2.Text, textBox4.Text, int.Parse(comboBox1.SelectedValue.ToString()));
+
+            ProductType productType = new ProductType(textBox1.Text,int.Parse(comboBox1.SelectedValue.ToString()));
             DataManager dataManager = new DataManager();
-            if (dataManager.UpdateClients(client))
+            if (dataManager.UpdateProdType(productType))
                 MessageBox.Show("Updated");
             else MessageBox.Show("NOT Updated");
-            LoadClients();
+            LoadProdType();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Client client = new Client(int.Parse(comboBox1.SelectedValue.ToString()));
+            ProductType productType = new ProductType(int.Parse(comboBox1.SelectedValue.ToString()));
             DataManager dataManager = new DataManager();
-            if (dataManager.DeleteClients(client))
+            if (dataManager.DeleteProdType(productType))
                 MessageBox.Show("Deleted");
             else MessageBox.Show("NOT Deleted");
-            LoadClients();
+            LoadProdType();
+        }
+
+        private void ProductType_Load(object sender, EventArgs e)
+        {
+            LoadProdType();
         }
     }
 }

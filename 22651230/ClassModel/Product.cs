@@ -22,6 +22,22 @@ namespace _22651230.ClassModel
             this.productType = productType;
             this.id = id;
         }
+        public Product(string prodName, float price, int quantity, ProductType productType)
+        {
+            this.prodName = prodName;
+            this.price = price;
+            this.quantity = quantity;
+            this.productType = productType;
+        }
+        public Product(string prodName, int id)
+        {
+            this.prodName = prodName; 
+            this.id = id;
+        }
+        public Product(int id)
+        {
+            this.id = id;
+        }
         public Product()
         {
             

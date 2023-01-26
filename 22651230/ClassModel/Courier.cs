@@ -22,6 +22,20 @@ namespace _22651230.ClassModel
             this.price = price;
             this.id = id;
         }
+        public Courier(string firstName, int id)
+        {
+            this.firstName = firstName;
+            this.id = id;
+        }
+        public Courier(string firstName, float price)
+        {
+            this.firstName = firstName;
+            this.price = price;
+        }
+        public Courier(int id)
+        {
+            this.id = id;
+        }
         public Courier()
         {
             this.firstName = "";
